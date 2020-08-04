@@ -29,11 +29,15 @@ namespace DAS.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddTransient<IBooksRepository, BooksRepository>();
-            services.AddTransient<IBookService, BookService>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddControllers();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IAuthorService, AuthorService>();
+            services.AddScoped<IPublishingRepository, PublishingRepository>();
+            services.AddScoped<IPublishingService, PublishingService>();
+            services.AddScoped<IBooksRepository, BooksRepository>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();  
             services.AddSwaggerGen();
         }
 
@@ -61,13 +65,16 @@ namespace DAS.API
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Book}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Book}/{action=Index}/{id?}");
+            //});
         }
     }
 }

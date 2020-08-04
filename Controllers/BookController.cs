@@ -9,9 +9,11 @@ using DAS.API.Models;
 using DAS.BAL.Interface;
 using DAS.Domain.Resquests;
 using DAS.Domain.Responses;
+using DAS.Domain.Responses.Books;
 
 namespace DAS.API.Controllers
 {
+    [ApiController]
     public class BookController : Controller
     {
         private readonly IBookService bookService;
@@ -21,26 +23,26 @@ namespace DAS.API.Controllers
             this.bookService = bookService;
         }
         [HttpGet]
-        [Route("/bookss/gets")]
-        public async Task<IEnumerable<Bookss>> Gets()
+        [Route("/book/gets/{id}")]
+        public async Task<IEnumerable<Bookss>> Gets(int id)
         {
-            return await bookService.Gets();
+            return await bookService.Gets(id);
         }
         [HttpGet]
-        [Route("/bookss/get/{id}")]
+        [Route("/book/get/{id}")]
         public async Task<Bookss>Get(int id)
         {
             return await bookService.Get(id);
         }
         [HttpPost]
-        [Route("/bookss/savebookss/save")]
-        public async Task<SaveBooksRequest> SaveBooks(SaveBooksResult save)
+        [Route("/book/save")]
+        public async Task<SaveBooksResult> Save(SaveBooksRequest save)
         {
             return await bookService.Save(save);
         }
         [HttpDelete]
-        [Route("/bookss/delete/{id}")]
-        public async Task<DeleteBooksResult>DeleteBookss(int id)
+        [Route("/book/delete/{id}")]
+        public async Task<DeleteBooksResult>Delete(int id)
         {
             return await bookService.Delete(id);
         }
